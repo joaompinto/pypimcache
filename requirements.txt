@@ -1,0 +1,7 @@
+
+typer
+platformdirs
+pypi-json==0.3.0
+pypi-simple==1.0.0
+requests>=2.26.0
+metadict
