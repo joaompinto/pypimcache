@@ -12,7 +12,7 @@ PYPI_SIMPLE_INDEX_URL = "https://pypi.org/simple/"
 
 
 def update():
-    """update our cache from the current pypi index"""
+    """update the cache from the current pypi index"""
     cache = Cache()
     PYPI_SIMPLE_INDEX_URL = "https://pypi.org/simple/"
     headers = {"Accept": "application/vnd.pypi.simple.v1+json"}
@@ -31,3 +31,5 @@ def update():
             cache.update(data)
             project_count = len(data["projects"])
             print(f"Saved index containing {project_count} projects")
+        else:
+            print("Nothing to update")

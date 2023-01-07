@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import time
 from pathlib import Path
 
@@ -64,10 +65,10 @@ class Cache:
 
     def update(self, data: dict) -> None:
         last_serial = str(data["meta"]["_last-serial"])
-        tmp_index_path = Path(self.cache_dir).joinpath(f"{last_serial}.json.tmp")
+        tmp_index_path = Path(self.cache_dir).joinpath("index.json.tmp")
         with open(tmp_index_path, "w") as index_file:
             index_file.write(json.dumps(data, indent=4))
-        final_path = Path(self.cache_dir).joinpath(f"{last_serial}.json")
+        final_path = Path(self.cache_dir).joinpath("index.json")
         if final_path.exists():
             os.unlink(final_path)
         os.rename(tmp_index_path, final_path)
@@ -76,7 +77,5 @@ class Cache:
             last_serial_file.write(last_serial)
 
     def clean(self) -> None:
-        try:
-            os.unlink(self.last_serial_fname)
-        except FileNotFoundError:
-            pass
+        shutil.rmtree(self.cache_dir, ignore_errors=True)
+        print("Cache cleared")
